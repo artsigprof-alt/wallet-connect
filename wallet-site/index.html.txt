@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Connect Wallet</title>
+</head>
+<body style="background:black;color:white;text-align:center;margin-top:100px;">
+
+  <h2>Connect your wallet</h2>
+  <button id="connect" style="font-size:20px;padding:10px 20px;">
+    Connect Phantom
+  </button>
+
+  <script>
+    const btn = document.getElementById("connect");
+
+    btn.onclick = async () => {
+      try {
+        if (!window.solana || !window.solana.isPhantom) {
+          alert("Phantom not installed");
+          return;
+        }
+
+        const resp = await window.solana.connect();
+        const publicKey = resp.publicKey.toString();
+
+        // 👉 возврат в игру
+        window.location.href =
+          "tankgame://callback?public_key=" + publicKey;
+
+      } catch (err) {
+        alert("Connection cancelled");
+      }
+    };
+  </script>
+
+</body>
+</html>
